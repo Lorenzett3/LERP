@@ -1,0 +1,169 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">N</span>
+      <div>
+        <strong>LERP</strong>
+        <small>Retail enterprise cockpit</small>
+      </div>
+    </div>
+
+    <nav aria-label="Modulos ERP">
+      @for (module of ['Dashboard', 'Products', 'Orders', 'Inventory']; track module) {
+        <button type="button" [class.active]="activeModule === module" (click)="setModule(module)">
+          <mat-icon>{{ module === 'Dashboard' ? 'dashboard' : module === 'Products' ? 'inventory_2' : module === 'Orders' ? 'receipt_long' : 'sync_alt' }}</mat-icon>
+          <span>{{ module }}</span>
+        </button>
+      }
+    </nav>
+
+    <div class="client-box">
+      <span>Mandante {{ dashboard.client }}</span>
+      <strong>{{ dashboard.companyCode }} / {{ dashboard.plant }}</strong>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <p>Arquitetura ERP inspirada em SAP</p>
+        <h1>{{ activeModule }}</h1>
+      </div>
+
+      <div class="session">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario demo</mat-label>
+          <mat-select [(value)]="selectedUser">
+            <mat-option value="admin@LERP.local">ADMIN - Analista ERP</mat-option>
+            <mat-option value="buyer@LERP.local">BUYER - Compras</mat-option>
+            <mat-option value="warehouse@LERP.local">WAREHOUSE - Estoque</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="button" (click)="refreshAll()">
+          <mat-icon>refresh</mat-icon>
+          Atualizar
+        </button>
+      </div>
+    </header>
+
+    @if (activeModule === 'Dashboard') {
+      <section class="kpi-grid">
+        @for (kpi of dashboard.kpis; track kpi.label) {
+          <article class="kpi-card">
+            <span>{{ kpi.label }}</span>
+            <strong>{{ formatKpi(kpi) }}</strong>
+            <small>{{ kpi.trend }}</small>
+          </article>
+        }
+      </section>
+
+      <section class="dashboard-grid">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Workflow SD</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="workflow">
+            @for (stage of dashboard.workflow; track stage.stage) {
+              <div>
+                <span>{{ stage.stage }}</span>
+                <strong>{{ stage.count }}</strong>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Alertas operacionais</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="alerts">
+            @for (alert of dashboard.alerts; track alert.title) {
+              <div [ngClass]="alert.severity.toLowerCase()">
+                <span>{{ alert.severity }}</span>
+                <strong>{{ alert.title }}</strong>
+                <small>{{ alert.detail }}</small>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      </section>
+    }
+
+    @if (activeModule === 'Products') {
+      <section class="workbench">
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>Cadastro mestre de material</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="productForm" (ngSubmit)="createProduct()">
+              <mat-form-field appearance="outline"><mat-label>SKU</mat-label><input matInput formControlName="sku"></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Descricao</mat-label><input matInput formControlName="name"></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Categoria</mat-label><input matInput formControlName="category"></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Preco</mat-label><input matInput type="number" formControlName="price"></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Estoque</mat-label><input matInput type="number" formControlName="stock"></mat-form-field>
+              <button mat-flat-button color="primary" type="submit"><mat-icon>add</mat-icon>Criar material</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <ag-grid-angular class="ag-theme-quartz erp-grid" [rowData]="products" [columnDefs]="productColumns" [defaultColDef]="defaultColumnDef"></ag-grid-angular>
+      </section>
+    }
+
+    @if (activeModule === 'Orders') {
+      <section class="workbench">
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>Pedido de venda</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="orderForm" (ngSubmit)="createOrder()">
+              <mat-form-field appearance="outline"><mat-label>Cliente</mat-label><input matInput formControlName="customer"></mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Canal</mat-label>
+                <mat-select formControlName="channel">
+                  <mat-option value="STORE">STORE</mat-option>
+                  <mat-option value="B2B">B2B</mat-option>
+                  <mat-option value="ECOMMERCE">ECOMMERCE</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Total</mat-label><input matInput type="number" formControlName="total"></mat-form-field>
+              <button mat-flat-button color="primary" type="submit"><mat-icon>receipt_long</mat-icon>Criar pedido</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <ag-grid-angular class="ag-theme-quartz erp-grid" [rowData]="orders" [columnDefs]="orderColumns" [defaultColDef]="defaultColumnDef"></ag-grid-angular>
+      </section>
+    }
+
+    @if (activeModule === 'Inventory') {
+      <section class="workbench">
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>Movimentacao MM</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="movementForm" (ngSubmit)="postMovement()">
+              <mat-form-field appearance="outline"><mat-label>SKU</mat-label><input matInput formControlName="productSku"></mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option value="INBOUND">INBOUND</mat-option>
+                  <mat-option value="OUTBOUND">OUTBOUND</mat-option>
+                  <mat-option value="ADJUSTMENT">ADJUSTMENT</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Quantidade</mat-label><input matInput type="number" formControlName="quantity"></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Referencia</mat-label><input matInput formControlName="reference"></mat-form-field>
+              <button mat-flat-button color="primary" type="submit"><mat-icon>sync_alt</mat-icon>Lancar movimento</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <ag-grid-angular class="ag-theme-quartz erp-grid" [rowData]="movements" [columnDefs]="movementColumns" [defaultColDef]="defaultColumnDef"></ag-grid-angular>
+      </section>
+    }
+  </main>
+</div>

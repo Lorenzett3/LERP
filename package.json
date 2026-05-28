@@ -1,0 +1,15 @@
+{
+  "name": "LERP",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ERP de portfolio inspirado em arquitetura SAP, com Angular, NestJS e base pronta para PostgreSQL.",
+  "scripts": {
+    "backend": "npm run start:dev --prefix backend",
+    "backend:clean": "powershell -ExecutionPolicy Bypass -File scripts/stop-dev-ports.ps1 && npm run start:dev --prefix backend",
+    "frontend": "npm run start --prefix frontend",
+    "frontend:clean": "powershell -ExecutionPolicy Bypass -File scripts/stop-dev-ports.ps1 && npm run start --prefix frontend",
+    "stop:ports": "powershell -ExecutionPolicy Bypass -File scripts/stop-dev-ports.ps1",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
+    "test:backend": "npm run test --prefix backend"
+  }
+}

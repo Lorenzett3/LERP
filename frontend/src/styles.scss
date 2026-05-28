@@ -1,0 +1,24 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f4f6f8;
+  color: #17202a;
+  font-family: Inter, Roboto, Arial, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
