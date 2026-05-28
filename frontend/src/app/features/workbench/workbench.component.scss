@@ -1,0 +1,13 @@
+.workbench {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+
+  app-action-button {
+    width: min(220px, 100%);
+  }
+}

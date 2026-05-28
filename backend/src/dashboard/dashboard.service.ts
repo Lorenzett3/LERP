@@ -23,8 +23,8 @@ export class DashboardService {
       alerts: [
         ...lowStock.map((product) => ({
           severity: product.stock === 0 ? 'HIGH' : 'MEDIUM',
-          title: `${product.name} abaixo do ponto de reposicao`,
-          detail: `Estoque ${product.stock} / minimo ${product.reorderPoint}`,
+          title: `${product.name} abaixo do ponto de reposição`,
+          detail: `Estoque ${product.stock} / mínimo ${product.reorderPoint}`,
         })),
         ...blocked.map((product) => ({
           severity: 'HIGH',

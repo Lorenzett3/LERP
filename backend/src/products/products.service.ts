@@ -32,4 +32,24 @@ export class ProductsService {
     product.stock = stock;
     return product;
   }
+
+  update(id: string, input: { sku?: string; name?: string; category?: string; price?: number; stock?: number }) {
+    const product = this.data.products.find((item) => item.id === id);
+    if (!product) {
+      throw new NotFoundException('Material nao encontrado.');
+    }
+
+    Object.assign(product, input);
+    return product;
+  }
+
+  remove(id: string) {
+    const index = this.data.products.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw new NotFoundException('Material nao encontrado.');
+    }
+
+    const [removed] = this.data.products.splice(index, 1);
+    return removed;
+  }
 }

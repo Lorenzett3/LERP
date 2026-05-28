@@ -1,0 +1,27 @@
+h2 {
+  margin: 0;
+  color: var(--color-text);
+  letter-spacing: 0;
+}
+
+mat-dialog-content {
+  width: min(520px, 82vw);
+  padding-top: var(--space-3) !important;
+}
+
+.dialog-form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.inline-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 560px) {
+  .inline-fields {
+    grid-template-columns: 1fr;
+  }
+}

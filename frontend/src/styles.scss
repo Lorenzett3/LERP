@@ -1,6 +1,39 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
+@import './styles/tokens';
+
+:root {
+  --color-page: #{$color-page};
+  --color-surface: #{$color-surface};
+  --color-surface-muted: #{$color-surface-muted};
+  --color-sidebar: #{$color-sidebar};
+  --color-sidebar-hover: #{$color-sidebar-hover};
+  --color-primary: #{$color-primary};
+  --color-primary-strong: #{$color-primary-strong};
+  --color-accent: #{$color-accent};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-border: #{$color-border};
+  --color-danger: #{$color-danger};
+  --color-warning: #{$color-warning};
+  --color-success: #{$color-success};
+
+  --space-1: #{$space-1};
+  --space-2: #{$space-2};
+  --space-3: #{$space-3};
+  --space-4: #{$space-4};
+  --space-5: #{$space-5};
+  --space-6: #{$space-6};
+  --space-8: #{$space-8};
+
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --shadow-panel: #{$shadow-panel};
+  --sidebar-width: #{$sidebar-width};
+  --content-max: #{$content-max};
+}
 
 * {
   box-sizing: border-box;
@@ -13,12 +46,64 @@ body {
 }
 
 body {
-  background: #f4f6f8;
-  color: #17202a;
+  background: var(--color-page);
+  color: var(--color-text);
   font-family: Inter, Roboto, Arial, sans-serif;
 }
 
 button,
 input {
   font: inherit;
+}
+
+.mat-mdc-card {
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-panel) !important;
+}
+
+.mat-mdc-card-header {
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.mat-mdc-card-content {
+  padding: var(--space-5) !important;
+}
+
+.mat-mdc-card-title {
+  color: var(--color-text);
+  font-size: 1rem !important;
+  letter-spacing: 0;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.ag-theme-quartz {
+  --ag-border-color: var(--color-border);
+  --ag-header-background-color: #f8fafc;
+  --ag-header-foreground-color: var(--color-text);
+  --ag-foreground-color: var(--color-text);
+  --ag-row-hover-color: #eef6ff;
+  --ag-font-family: Inter, Roboto, Arial, sans-serif;
+}
+
+.error-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: var(--radius-lg);
+}
+
+.entity-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: var(--radius-lg);
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: var(--color-success);
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: var(--color-danger);
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
 }

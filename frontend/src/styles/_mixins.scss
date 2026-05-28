@@ -1,0 +1,17 @@
+@mixin panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-panel);
+}
+
+@mixin section-grid($min: 220px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
+  gap: var(--space-4);
+}
+
+@mixin compact-scrollbar {
+  scrollbar-color: #aab6c5 transparent;
+  scrollbar-width: thin;
+}

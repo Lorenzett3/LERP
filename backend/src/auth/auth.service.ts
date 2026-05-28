@@ -8,7 +8,7 @@ export class AuthService {
   login(email: string) {
     const user = this.data.users.find((item) => item.email === email);
     if (!user) {
-      throw new UnauthorizedException('Usuario nao encontrado no mandante LERP.');
+      throw new UnauthorizedException('Usuário não encontrado no mandante LERP.');
     }
 
     return {
@@ -22,9 +22,9 @@ export class AuthService {
 
   roles() {
     return [
-      { role: 'ADMIN', description: 'Acesso total aos modulos ERP' },
-      { role: 'BUYER', description: 'Compras, produtos e reposicao' },
-      { role: 'WAREHOUSE', description: 'Movimentacoes de estoque e separacao' },
+      { role: 'ADMIN', description: 'Acesso total aos módulos ERP' },
+      { role: 'BUYER', description: 'Compras, produtos e reposição' },
+      { role: 'WAREHOUSE', description: 'Movimentações de estoque e separação' },
       { role: 'SALES', description: 'Pedidos, clientes e faturamento' },
     ];
   }

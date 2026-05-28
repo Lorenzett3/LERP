@@ -1,0 +1,15 @@
+<section class="workbench">
+  <div class="toolbar">
+    <app-action-button icon="add" label="Incluir movimento" (pressed)="createClicked.emit()" />
+  </div>
+
+  <app-erp-grid
+    title="Documentos de material"
+    eyebrow="Módulo MM"
+    [rows]="movements"
+    [columns]="columns"
+    (viewRow)="viewClicked.emit($event)"
+    (editRow)="editClicked.emit($event)"
+    (deleteRow)="deleteClicked.emit($event)"
+  />
+</section>

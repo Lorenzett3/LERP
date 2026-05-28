@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 
 @Controller('orders')
@@ -15,8 +15,18 @@ export class OrdersController {
     return this.ordersService.create(body);
   }
 
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body: { customer?: string; channel?: 'STORE' | 'B2B' | 'ECOMMERCE'; total?: number; status?: 'DRAFT' | 'APPROVAL' | 'PICKING' | 'INVOICED' }) {
+    return this.ordersService.update(id, body);
+  }
+
   @Patch(':id/status')
   changeStatus(@Param('id') id: string, @Body() body: { status: 'DRAFT' | 'APPROVAL' | 'PICKING' | 'INVOICED' }) {
     return this.ordersService.changeStatus(id, body.status);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.ordersService.remove(id);
   }
 }

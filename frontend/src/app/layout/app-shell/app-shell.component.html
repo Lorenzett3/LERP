@@ -1,0 +1,50 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">L</span>
+      <div>
+        <strong>LERP</strong>
+        <small>Painel empresarial de varejo</small>
+      </div>
+    </div>
+
+    <nav aria-label="Módulos ERP">
+      @for (item of navItems; track item.label) {
+        <button type="button" [class.active]="activeModule === item.label" (click)="moduleChanged.emit(item.label)">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </button>
+      }
+    </nav>
+
+    <div class="client-box">
+      <span>Mandante {{ dashboard.client }}</span>
+      <strong>{{ dashboard.companyCode }} / {{ dashboard.plant }}</strong>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div class="title-group">
+        <p>Arquitetura ERP inspirada em SAP</p>
+        <h1>{{ activeModule }}</h1>
+      </div>
+
+      <div class="session">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Usuário demo</mat-label>
+          <mat-select [value]="selectedUser" (valueChange)="selectedUserChange.emit($event)">
+            <mat-option value="admin@LERP.local">ADMIN - Analista ERP</mat-option>
+            <mat-option value="buyer@LERP.local">BUYER - Compras</mat-option>
+            <mat-option value="warehouse@LERP.local">WAREHOUSE - Estoque</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <app-action-button icon="refresh" label="Atualizar" (pressed)="refresh.emit()" />
+      </div>
+    </header>
+
+    <section class="content">
+      <ng-content />
+    </section>
+  </main>
+</div>

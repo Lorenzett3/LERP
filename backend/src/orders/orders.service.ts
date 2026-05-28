@@ -28,4 +28,24 @@ export class OrdersService {
     order.status = status;
     return order;
   }
+
+  update(id: string, input: { customer?: string; channel?: 'STORE' | 'B2B' | 'ECOMMERCE'; total?: number; status?: 'DRAFT' | 'APPROVAL' | 'PICKING' | 'INVOICED' }) {
+    const order = this.data.orders.find((item) => item.id === id);
+    if (!order) {
+      throw new NotFoundException('Pedido nao encontrado.');
+    }
+
+    Object.assign(order, input);
+    return order;
+  }
+
+  remove(id: string) {
+    const index = this.data.orders.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw new NotFoundException('Pedido nao encontrado.');
+    }
+
+    const [removed] = this.data.orders.splice(index, 1);
+    return removed;
+  }
 }

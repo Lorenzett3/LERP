@@ -1,0 +1,15 @@
+<section class="workbench">
+  <div class="toolbar">
+    <app-action-button icon="add" label="Incluir pedido" (pressed)="createClicked.emit()" />
+  </div>
+
+  <app-erp-grid
+    title="Pedidos de venda"
+    eyebrow="Módulo SD"
+    [rows]="orders"
+    [columns]="columns"
+    (viewRow)="viewClicked.emit($event)"
+    (editRow)="editClicked.emit($event)"
+    (deleteRow)="deleteClicked.emit($event)"
+  />
+</section>
