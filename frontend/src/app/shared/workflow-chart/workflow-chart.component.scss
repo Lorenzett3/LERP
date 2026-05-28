@@ -19,6 +19,51 @@
   }
 }
 
+@media (min-width: 721px) and (max-width: 1100px) {
+  .chart {
+    gap: var(--space-3);
+  }
+
+  .bar-row {
+    gap: var(--space-1);
+  }
+
+  .label span,
+  .label strong {
+    font-size: 0.86rem;
+  }
+
+  .track {
+    height: 8px;
+  }
+}
+
+@media (max-width: 720px) {
+  .chart {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .bar-row {
+    gap: 6px;
+  }
+
+  .label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .label span,
+  .label strong {
+    font-size: 0.78rem;
+  }
+
+  .track {
+    height: 7px;
+  }
+}
+
 .track {
   height: 10px;
   overflow: hidden;

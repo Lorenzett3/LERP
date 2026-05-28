@@ -12,6 +12,6 @@
 }
 
 @mixin compact-scrollbar {
-  scrollbar-color: #aab6c5 transparent;
+  scrollbar-color: var(--color-scrollbar) transparent;
   scrollbar-width: thin;
 }

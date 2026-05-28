@@ -1,17 +1,20 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Dashboard } from '../../core/models/erp.models';
+import { MatIconModule } from '@angular/material/icon';
+import { Dashboard, OperationalAlert } from '../../core/models/erp.models';
 import { KpiCardComponent } from '../../shared/kpi-card/kpi-card.component';
 import { WorkflowChartComponent } from '../../shared/workflow-chart/workflow-chart.component';
 
 @Component({
   selector: 'app-dashboard-view',
   standalone: true,
-  imports: [KpiCardComponent, MatCardModule, NgClass, WorkflowChartComponent],
+  imports: [KpiCardComponent, MatButtonModule, MatCardModule, MatIconModule, NgClass, WorkflowChartComponent],
   templateUrl: './dashboard-view.component.html',
   styleUrl: './dashboard-view.component.scss',
 })
 export class DashboardViewComponent {
   @Input({ required: true }) dashboard!: Dashboard;
+  @Output() alertVerify = new EventEmitter<OperationalAlert>();
 }

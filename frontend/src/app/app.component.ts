@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ColDef } from 'ag-grid-community';
-import { Dashboard, ErpModule, InventoryMovement, Order, Product } from './core/models/erp.models';
+import { Dashboard, ErpModule, InventoryMovement, OperationalAlert, Order, Product } from './core/models/erp.models';
 import { ErpApiService } from './core/services/erp-api.service';
 import { DashboardViewComponent } from './features/dashboard/dashboard-view.component';
 import { InventoryWorkbenchComponent } from './features/workbench/inventory-workbench.component';
@@ -244,6 +244,22 @@ export class AppComponent implements OnInit {
 
   setModule(module: ErpModule) {
     this.activeModule = module;
+  }
+
+  verifyAlert(alert: OperationalAlert) {
+    if (alert.resourceType !== 'PRODUCT' || !alert.resourceId) {
+      this.openErrorSnackBar({ status: 400 } as HttpErrorResponse, 'Este alerta ainda não possui ação configurada.');
+      return;
+    }
+
+    const product = this.products.find((item) => item.id === alert.resourceId);
+    if (!product) {
+      this.openErrorSnackBar({ status: 404 } as HttpErrorResponse, 'Produto do alerta não encontrado.');
+      return;
+    }
+
+    this.activeModule = 'Produtos';
+    setTimeout(() => this.openProductDialog('edit', product));
   }
 
   private openSuccessSnackBar(message: string) {

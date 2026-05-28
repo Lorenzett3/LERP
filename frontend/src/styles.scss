@@ -7,17 +7,35 @@
   --color-page: #{$color-page};
   --color-surface: #{$color-surface};
   --color-surface-muted: #{$color-surface-muted};
+  --color-surface-soft: #{$color-surface-soft};
+  --color-surface-alt: #{$color-surface-alt};
+  --color-info-soft: #{$color-info-soft};
+  --color-warning-soft: #{$color-warning-soft};
+  --color-danger-soft: #{$color-danger-soft};
   --color-sidebar: #{$color-sidebar};
   --color-sidebar-hover: #{$color-sidebar-hover};
+  --color-sidebar-border: #{$color-sidebar-border};
+  --color-sidebar-text: #{$color-sidebar-text};
+  --color-sidebar-text-muted: #{$color-sidebar-text-muted};
+  --color-brand-text: #{$color-brand-text};
   --color-primary: #{$color-primary};
   --color-primary-strong: #{$color-primary-strong};
+  --color-primary-soft: #{$color-primary-soft};
   --color-accent: #{$color-accent};
   --color-text: #{$color-text};
   --color-text-muted: #{$color-text-muted};
+  --color-text-inverse: #{$color-text-inverse};
   --color-border: #{$color-border};
   --color-danger: #{$color-danger};
   --color-warning: #{$color-warning};
   --color-success: #{$color-success};
+  --color-scrollbar: #{$color-scrollbar};
+
+  --color-button: #{$color-primary};
+  --color-button-hover: #{$color-primary-strong};
+  --color-button-text: #{$color-text-inverse};
+  --color-button-secondary: #{$color-surface-muted};
+  --color-button-secondary-text: #{$color-text-muted};
 
   --space-1: #{$space-1};
   --space-2: #{$space-2};
@@ -31,6 +49,10 @@
   --radius-md: #{$radius-md};
   --radius-lg: #{$radius-lg};
   --shadow-panel: #{$shadow-panel};
+  --shadow-card: #{$shadow-card};
+  --shadow-button: #{$shadow-button};
+  --shadow-button-hover: #{$shadow-button-hover};
+  --shadow-icon-button: #{$shadow-icon-button};
   --sidebar-width: #{$sidebar-width};
   --content-max: #{$content-max};
 }
@@ -56,6 +78,27 @@ input {
   font: inherit;
 }
 
+button {
+  transition:
+    box-shadow 140ms ease,
+    transform 140ms ease,
+    filter 140ms ease,
+    background-color 140ms ease;
+}
+
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  box-shadow: var(--shadow-button) !important;
+}
+
+.mat-mdc-unelevated-button:hover,
+.mat-mdc-raised-button:hover,
+.mat-mdc-outlined-button:hover {
+  box-shadow: var(--shadow-button-hover) !important;
+  transform: translateY(-1px);
+}
+
 .mat-mdc-card {
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-panel) !important;
@@ -75,16 +118,44 @@ input {
   letter-spacing: 0;
 }
 
+@media (max-width: 1100px) {
+  .mat-mdc-card-header {
+    padding: var(--space-4) var(--space-4) 0;
+  }
+
+  .mat-mdc-card-content {
+    padding: var(--space-4) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .mat-mdc-card-header {
+    padding: var(--space-3) var(--space-3) 0;
+  }
+
+  .mat-mdc-card-content {
+    padding: var(--space-3) !important;
+  }
+
+  .mat-mdc-card-title {
+    font-size: 0.92rem !important;
+  }
+}
+
 .mat-mdc-form-field {
   width: 100%;
 }
 
 .ag-theme-quartz {
   --ag-border-color: var(--color-border);
-  --ag-header-background-color: #f8fafc;
+  --ag-header-background-color: var(--color-surface-soft);
   --ag-header-foreground-color: var(--color-text);
   --ag-foreground-color: var(--color-text);
-  --ag-row-hover-color: #eef6ff;
+  --ag-row-hover-color: var(--color-info-soft);
+  --ag-odd-row-background-color: var(--color-surface);
+  --ag-background-color: var(--color-surface);
+  --ag-header-column-resize-handle-color: var(--color-border);
+  --ag-wrapper-border-radius: var(--radius-md);
   --ag-font-family: Inter, Roboto, Arial, sans-serif;
 }
 
@@ -98,12 +169,12 @@ input {
 
 .success-snackbar {
   --mdc-snackbar-container-color: var(--color-success);
-  --mdc-snackbar-supporting-text-color: #ffffff;
-  --mat-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: var(--color-text-inverse);
+  --mat-snack-bar-button-color: var(--color-text-inverse);
 }
 
 .error-snackbar {
   --mdc-snackbar-container-color: var(--color-danger);
-  --mdc-snackbar-supporting-text-color: #ffffff;
-  --mat-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: var(--color-text-inverse);
+  --mat-snack-bar-button-color: var(--color-text-inverse);
 }

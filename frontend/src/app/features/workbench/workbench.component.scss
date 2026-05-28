@@ -11,3 +11,23 @@
     width: min(220px, 100%);
   }
 }
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .workbench {
+    gap: var(--space-2);
+  }
+
+  .toolbar app-action-button {
+    width: 190px;
+  }
+}
+
+@media (max-width: 720px) {
+  .toolbar {
+    justify-content: stretch;
+  }
+
+  .toolbar app-action-button {
+    width: 100%;
+  }
+}

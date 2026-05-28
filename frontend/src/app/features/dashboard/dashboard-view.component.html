@@ -21,9 +21,16 @@
     <mat-card-content class="alerts">
       @for (alert of dashboard.alerts; track alert.title) {
         <article [ngClass]="alert.severity.toLowerCase()">
-          <span>{{ alert.severity }}</span>
-          <strong>{{ alert.title }}</strong>
-          <small>{{ alert.detail }}</small>
+          <div>
+            <span>{{ alert.severity }}</span>
+            <strong>{{ alert.title }}</strong>
+            <small>{{ alert.detail }}</small>
+          </div>
+
+          <button mat-stroked-button type="button" (click)="alertVerify.emit(alert)">
+            <mat-icon>open_in_new</mat-icon>
+            Verificar
+          </button>
         </article>
       }
     </mat-card-content>

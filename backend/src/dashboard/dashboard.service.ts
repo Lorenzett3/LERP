@@ -17,25 +17,29 @@ export class DashboardService {
       kpis: [
         { label: 'Valor em pedidos', value: orderValue, format: 'currency', trend: '+12.4%' },
         { label: 'Materiais ativos', value: this.data.products.length, format: 'number', trend: '+3' },
-        { label: 'Alertas de estoque', value: lowStock.length, format: 'number', trend: 'critico' },
+        { label: 'Alertas de estoque', value: lowStock.length, format: 'number', trend: 'crítico' },
         { label: 'Documentos MM', value: this.data.movements.length, format: 'number', trend: '+8 hoje' },
       ],
       alerts: [
         ...lowStock.map((product) => ({
-          severity: product.stock === 0 ? 'HIGH' : 'MEDIUM',
+          severity: product.stock === 0 ? 'ALTO' : 'MÉDIO',
           title: `${product.name} abaixo do ponto de reposição`,
           detail: `Estoque ${product.stock} / mínimo ${product.reorderPoint}`,
+          resourceType: 'PRODUCT',
+          resourceId: product.id,
         })),
         ...blocked.map((product) => ({
-          severity: 'HIGH',
+          severity: 'ALTO',
           title: `${product.name} bloqueado para venda`,
           detail: 'Revisar cadastro mestre de material',
+          resourceType: 'PRODUCT',
+          resourceId: product.id,
         })),
       ],
       workflow: [
         { stage: 'Pedido criado', count: this.data.orders.filter((order) => order.status === 'DRAFT').length },
-        { stage: 'Aprovacao', count: this.data.orders.filter((order) => order.status === 'APPROVAL').length },
-        { stage: 'Separacao', count: this.data.orders.filter((order) => order.status === 'PICKING').length },
+        { stage: 'Aprovação', count: this.data.orders.filter((order) => order.status === 'APPROVAL').length },
+        { stage: 'Separação', count: this.data.orders.filter((order) => order.status === 'PICKING').length },
         { stage: 'Faturado', count: this.data.orders.filter((order) => order.status === 'INVOICED').length },
       ],
     };

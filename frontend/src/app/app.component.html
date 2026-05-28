@@ -6,7 +6,7 @@
   (refresh)="refreshAll()"
 >
   @if (activeModule === 'Painel') {
-    <app-dashboard-view [dashboard]="dashboard" />
+    <app-dashboard-view [dashboard]="dashboard" (alertVerify)="verifyAlert($event)" />
   }
 
   @if (activeModule === 'Produtos') {

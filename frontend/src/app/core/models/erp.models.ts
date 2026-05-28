@@ -48,6 +48,8 @@ export interface OperationalAlert {
   severity: string;
   title: string;
   detail: string;
+  resourceType?: 'PRODUCT' | 'ORDER' | 'INVENTORY';
+  resourceId?: string;
 }
 
 export interface WorkflowStage {
