@@ -14,6 +14,7 @@ import { ErpGridComponent } from '../../shared/erp-grid/erp-grid.component';
 export class OrdersWorkbenchComponent {
   @Input() orders: Order[] = [];
   @Input() columns: ColDef<Order>[] = [];
+  @Input() searchTerm = '';
   @Output() createClicked = new EventEmitter<void>();
   @Output() viewClicked = new EventEmitter<Order>();
   @Output() editClicked = new EventEmitter<Order>();

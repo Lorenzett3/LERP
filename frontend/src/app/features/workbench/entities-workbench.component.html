@@ -1,14 +1,13 @@
 <section class="workbench">
   <div class="toolbar">
-    <app-action-button icon="add" label="Incluir material" (pressed)="createClicked.emit()" />
+    <app-action-button icon="add" label="Incluir entidade" (pressed)="createClicked.emit()" />
   </div>
 
   <app-erp-grid
-    title="Materiais cadastrados"
-    eyebrow="Módulo MM"
-    [rows]="products"
+    title="Clientes e funcionários"
+    eyebrow="Parceiros ERP"
+    [rows]="entities"
     [columns]="columns"
-    [initialSearchTerm]="searchTerm"
     (viewRow)="viewClicked.emit($event)"
     (editRow)="editClicked.emit($event)"
     (deleteRow)="deleteClicked.emit($event)"

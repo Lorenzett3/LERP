@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -89,10 +89,11 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   `,
   styleUrl: './erp-grid.component.scss',
 })
-export class ErpGridComponent<T> {
+export class ErpGridComponent<T> implements OnChanges {
   @Input({ required: true }) title = '';
   @Input() eyebrow = 'Tabela operacional';
   @Input() searchPlaceholder = 'Pesquisar';
+  @Input() initialSearchTerm = '';
   @Input() rows: T[] = [];
   @Input() columns: ColDef<T>[] = [];
   @Output() viewRow = new EventEmitter<T>();
@@ -110,6 +111,13 @@ export class ErpGridComponent<T> {
 
   searchTerm = '';
   searchMode: 'contains' | 'equals' = 'contains';
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['initialSearchTerm']) {
+      this.searchTerm = this.initialSearchTerm;
+      this.searchMode = 'contains';
+    }
+  }
 
   get searchModeLabel() {
     return this.searchMode === 'contains' ? 'Contém' : 'Igual';

@@ -31,6 +31,7 @@ export class AppShellComponent {
     { label: 'Produtos', icon: 'inventory_2' },
     { label: 'Pedidos', icon: 'receipt_long' },
     { label: 'Estoque', icon: 'sync_alt' },
+    { label: 'Entidades', icon: 'groups' },
   ];
 
   get selectedUserData() {

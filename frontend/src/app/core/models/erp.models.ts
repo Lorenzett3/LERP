@@ -1,6 +1,6 @@
 import { ColDef } from 'ag-grid-community';
 
-export type ErpModule = 'Painel' | 'Produtos' | 'Pedidos' | 'Estoque';
+export type ErpModule = 'Painel' | 'Produtos' | 'Pedidos' | 'Estoque' | 'Entidades';
 
 export interface NavItem {
   label: ErpModule;
@@ -35,6 +35,19 @@ export interface InventoryMovement {
   quantity: number;
   reference: string;
   postedAt: string;
+}
+
+export interface BusinessEntity {
+  id: string;
+  kind: string;
+  name: string;
+  document: string;
+  customerType?: string;
+  segment?: string;
+  role?: string;
+  email?: string;
+  creditLimit?: number;
+  status: string;
 }
 
 export interface Kpi {

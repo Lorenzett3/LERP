@@ -70,6 +70,11 @@ nav {
     background: var(--color-sidebar-hover);
     color: var(--color-text-inverse);
   }
+
+  button:active {
+    filter: brightness(0.94);
+    transform: translateY(1px) scale(0.99);
+  }
 }
 
 .nav-area {
@@ -101,6 +106,12 @@ nav {
 .user-profile-button:hover {
   border-color: var(--color-primary-soft);
   color: var(--color-text-inverse);
+}
+
+.user-profile-button:active {
+  box-shadow: var(--shadow-panel);
+  filter: brightness(0.94);
+  transform: translateY(1px) scale(0.98);
 }
 
 .user-avatar {
@@ -221,7 +232,7 @@ main {
 
   nav {
     order: 1;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 
     button {
       justify-content: center;

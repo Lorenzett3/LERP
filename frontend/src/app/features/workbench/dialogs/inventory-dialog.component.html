@@ -6,6 +6,14 @@
       <mat-label>SKU</mat-label>
       <input matInput formControlName="productSku" />
     </mat-form-field>
+
+    @if (data?.item) {
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Material</mat-label>
+        <input matInput formControlName="productName" />
+      </mat-form-field>
+    }
+
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Tipo</mat-label>
       <mat-select formControlName="type">
@@ -14,16 +22,25 @@
         <mat-option value="ADJUSTMENT">Ajuste</mat-option>
       </mat-select>
     </mat-form-field>
+
     <div class="inline-fields">
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Quantidade</mat-label>
         <input matInput type="number" formControlName="quantity" />
       </mat-form-field>
+
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Referência</mat-label>
         <input matInput formControlName="reference" />
       </mat-form-field>
     </div>
+
+    @if (data?.item) {
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Lançado em</mat-label>
+        <input matInput formControlName="postedAt" />
+      </mat-form-field>
+    }
   </form>
 </mat-dialog-content>
 

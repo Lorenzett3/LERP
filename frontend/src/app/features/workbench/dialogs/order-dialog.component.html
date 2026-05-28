@@ -6,14 +6,26 @@
       <mat-label>Cliente</mat-label>
       <input matInput formControlName="customer" />
     </mat-form-field>
+
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Canal</mat-label>
       <mat-select formControlName="channel">
-        <mat-option value="STORE">Loja</mat-option>
+        <mat-option value="STORE">Loja física</mat-option>
         <mat-option value="B2B">B2B</mat-option>
         <mat-option value="ECOMMERCE">E-commerce</mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Fluxo</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="DRAFT">Criado</mat-option>
+        <mat-option value="APPROVAL">Aprovação</mat-option>
+        <mat-option value="PICKING">Separação</mat-option>
+        <mat-option value="INVOICED">Faturado</mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Total</mat-label>
       <input matInput type="number" formControlName="total" />

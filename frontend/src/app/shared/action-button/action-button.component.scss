@@ -16,6 +16,12 @@ button:hover {
   transform: translateY(-1px);
 }
 
+button:active {
+  box-shadow: var(--shadow-panel) !important;
+  filter: brightness(0.96);
+  transform: translateY(1px) scale(0.99);
+}
+
 span {
   white-space: nowrap;
 }

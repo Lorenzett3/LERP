@@ -14,6 +14,7 @@ import { ErpGridComponent } from '../../shared/erp-grid/erp-grid.component';
 export class ProductsWorkbenchComponent {
   @Input() products: Product[] = [];
   @Input() columns: ColDef<Product>[] = [];
+  @Input() searchTerm = '';
   @Output() createClicked = new EventEmitter<void>();
   @Output() viewClicked = new EventEmitter<Product>();
   @Output() editClicked = new EventEmitter<Product>();

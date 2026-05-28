@@ -30,6 +30,13 @@ mat-dialog-content {
   color: var(--color-success-button-text) !important;
 }
 
+.dialog-cancel-button:active,
+.dialog-save-button:active {
+  box-shadow: var(--shadow-panel) !important;
+  filter: brightness(0.96);
+  transform: translateY(1px) scale(0.99);
+}
+
 @media (max-width: 560px) {
   .inline-fields {
     grid-template-columns: 1fr;

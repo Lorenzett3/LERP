@@ -13,11 +13,11 @@ export class ProductsService {
     return this.data.products.filter((product) => product.stock <= product.reorderPoint);
   }
 
-  create(input: { sku: string; name: string; category: string; price: number; stock: number }) {
+  create(input: { sku: string; name: string; category: string; price: number; stock: number; status?: 'ACTIVE' | 'BLOCKED' }) {
     const product = {
       id: `MAT-${Math.floor(Math.random() * 9000 + 1000)}`,
       reorderPoint: 50,
-      status: 'ACTIVE' as const,
+      status: input.status ?? ('ACTIVE' as const),
       ...input,
     };
     this.data.products.unshift(product);
@@ -33,7 +33,7 @@ export class ProductsService {
     return product;
   }
 
-  update(id: string, input: { sku?: string; name?: string; category?: string; price?: number; stock?: number }) {
+  update(id: string, input: { sku?: string; name?: string; category?: string; price?: number; stock?: number; status?: 'ACTIVE' | 'BLOCKED' }) {
     const product = this.data.products.find((item) => item.id === id);
     if (!product) {
       throw new NotFoundException('Material nao encontrado.');

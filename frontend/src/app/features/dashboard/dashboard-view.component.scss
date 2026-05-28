@@ -103,6 +103,29 @@ mat-card-content {
   }
 }
 
+.clickable-card {
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.clickable-card:hover,
+.clickable-card:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-button-hover);
+  outline: 0;
+  transform: translateY(-1px);
+}
+
+.clickable-card:active {
+  border-color: var(--color-primary-strong);
+  box-shadow: var(--shadow-panel);
+  filter: brightness(0.97);
+  transform: translateY(1px) scale(0.99);
+}
+
 .bar-track {
   grid-column: 1 / -1;
   height: 8px;

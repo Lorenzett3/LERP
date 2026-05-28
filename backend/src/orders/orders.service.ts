@@ -9,7 +9,7 @@ export class OrdersService {
     return this.data.orders;
   }
 
-  create(input: { customer: string; channel: 'STORE' | 'B2B' | 'ECOMMERCE'; total: number }) {
+  create(input: { customer: string; channel: 'STORE' | 'B2B' | 'ECOMMERCE'; status?: 'DRAFT' | 'APPROVAL' | 'PICKING' | 'INVOICED'; total: number }) {
     const order = {
       id: `SO-${Math.floor(Math.random() * 900000 + 100000)}`,
       status: 'DRAFT' as const,

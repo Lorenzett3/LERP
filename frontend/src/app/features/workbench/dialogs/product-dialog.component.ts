@@ -1,18 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Product } from '../../../core/models/erp.models';
 import { EntityDialogData } from './entity-dialog.model';
 
-type ProductInput = Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock'>;
+type ProductInput = Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock' | 'status'>;
 
 @Component({
   selector: 'app-product-dialog',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
   templateUrl: './product-dialog.component.html',
   styleUrl: './entity-dialog.component.scss',
 })
@@ -29,6 +30,7 @@ export class ProductDialogComponent {
     category: [this.data?.item?.category ?? 'Mercearia', Validators.required],
     price: [this.data?.item?.price ?? 0, [Validators.required, Validators.min(0.01)]],
     stock: [this.data?.item?.stock ?? 0, [Validators.required, Validators.min(0)]],
+    active: [this.data?.item?.status !== 'BLOCKED'],
   });
 
   constructor() {
@@ -43,6 +45,10 @@ export class ProductDialogComponent {
       return;
     }
 
-    this.dialogRef.close(this.form.getRawValue());
+    const { active, ...value } = this.form.getRawValue();
+    this.dialogRef.close({
+      ...value,
+      status: active ? 'ACTIVE' : 'BLOCKED',
+    });
   }
 }

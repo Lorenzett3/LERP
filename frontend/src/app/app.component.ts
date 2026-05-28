@@ -3,13 +3,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ColDef } from 'ag-grid-community';
-import { Dashboard, ErpModule, InventoryMovement, OperationalAlert, Order, Product } from './core/models/erp.models';
+import { BusinessEntity, Dashboard, ErpModule, InventoryMovement, OperationalAlert, Order, Product } from './core/models/erp.models';
 import { ErpApiService } from './core/services/erp-api.service';
 import { DashboardViewComponent } from './features/dashboard/dashboard-view.component';
+import { EntitiesWorkbenchComponent } from './features/workbench/entities-workbench.component';
 import { InventoryWorkbenchComponent } from './features/workbench/inventory-workbench.component';
 import { OrdersWorkbenchComponent } from './features/workbench/orders-workbench.component';
 import { ProductsWorkbenchComponent } from './features/workbench/products-workbench.component';
 import { InventoryDialogComponent } from './features/workbench/dialogs/inventory-dialog.component';
+import { EntityRecordDialogComponent } from './features/workbench/dialogs/entity-record-dialog.component';
 import { EntityDialogMode } from './features/workbench/dialogs/entity-dialog.model';
 import { OrderDialogComponent } from './features/workbench/dialogs/order-dialog.component';
 import { ProductDialogComponent } from './features/workbench/dialogs/product-dialog.component';
@@ -21,6 +23,7 @@ import { AppShellComponent } from './layout/app-shell/app-shell.component';
   imports: [
     AppShellComponent,
     DashboardViewComponent,
+    EntitiesWorkbenchComponent,
     InventoryWorkbenchComponent,
     OrdersWorkbenchComponent,
     ProductsWorkbenchComponent,
@@ -35,6 +38,8 @@ export class AppComponent implements OnInit {
 
   activeModule: ErpModule = 'Painel';
   selectedUser = 'admin@LERP.local';
+  productSearchTerm = '';
+  orderSearchTerm = '';
 
   dashboard: Dashboard = {
     client: '800',
@@ -48,6 +53,7 @@ export class AppComponent implements OnInit {
   products: Product[] = [];
   orders: Order[] = [];
   movements: InventoryMovement[] = [];
+  entities: BusinessEntity[] = [];
 
   readonly productColumns: ColDef<Product>[] = [
     { field: 'id', headerName: 'Material', width: 120 },
@@ -78,6 +84,16 @@ export class AppComponent implements OnInit {
     { field: 'postedAt', headerName: 'Lançado em', width: 160 },
   ];
 
+  readonly entityColumns: ColDef<BusinessEntity>[] = [
+    { field: 'id', headerName: 'Entidade', width: 130 },
+    { field: 'kind', headerName: 'Tipo', width: 130, valueFormatter: ({ value }) => this.entityKindLabel(value) },
+    { field: 'name', headerName: 'Nome', flex: 1 },
+    { field: 'document', headerName: 'Documento', width: 170 },
+    { field: 'segment', headerName: 'Segmento', width: 130, valueFormatter: ({ value }) => this.segmentLabel(value) },
+    { field: 'role', headerName: 'Função', width: 130, valueFormatter: ({ value }) => this.entityRoleLabel(value) },
+    { field: 'status', headerName: 'Status', width: 120, valueFormatter: ({ value }) => this.entityStatusLabel(value) },
+  ];
+
   readonly defaultColumnDef: ColDef = {
     sortable: true,
     filter: true,
@@ -93,6 +109,7 @@ export class AppComponent implements OnInit {
     this.api.getProducts().subscribe((products) => (this.products = products));
     this.api.getOrders().subscribe((orders) => (this.orders = orders));
     this.api.getMovements().subscribe((movements) => (this.movements = movements));
+    this.api.getEntities().subscribe((entities) => (this.entities = entities));
   }
 
   openProductDialog(mode: EntityDialogMode = 'create', item?: Product) {
@@ -152,7 +169,26 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private createProduct(input: Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock'>) {
+  openEntityDialog(mode: EntityDialogMode = 'create', item?: BusinessEntity) {
+    this.dialog
+      .open(EntityRecordDialogComponent, {
+        autoFocus: 'first-tabbable',
+        data: { mode, item },
+        panelClass: 'entity-dialog-panel',
+        restoreFocus: true,
+      })
+      .afterClosed()
+      .subscribe((input) => {
+        if (input && mode === 'create') {
+          this.createEntity(input);
+        }
+        if (input && mode === 'edit' && item) {
+          this.updateEntity(item.id, input);
+        }
+      });
+  }
+
+  private createProduct(input: Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock' | 'status'>) {
     this.api.createProduct(input).subscribe({
       next: () => {
         this.refreshAll();
@@ -162,7 +198,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private updateProduct(id: string, input: Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock'>) {
+  private updateProduct(id: string, input: Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock' | 'status'>) {
     this.api.updateProduct(id, input).subscribe({
       next: () => {
         this.refreshAll();
@@ -182,7 +218,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private createOrder(input: Pick<Order, 'customer' | 'channel' | 'total'>) {
+  private createOrder(input: Pick<Order, 'customer' | 'channel' | 'status' | 'total'>) {
     this.api.createOrder(input).subscribe({
       next: () => {
         this.refreshAll();
@@ -192,7 +228,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private updateOrder(id: string, input: Pick<Order, 'customer' | 'channel' | 'total'>) {
+  private updateOrder(id: string, input: Pick<Order, 'customer' | 'channel' | 'status' | 'total'>) {
     this.api.updateOrder(id, input).subscribe({
       next: () => {
         this.refreshAll();
@@ -242,8 +278,59 @@ export class AppComponent implements OnInit {
     });
   }
 
+  private createEntity(input: Omit<BusinessEntity, 'id'>) {
+    this.api.createEntity(input).subscribe({
+      next: () => {
+        this.refreshAll();
+        this.openSuccessSnackBar('Entidade criada com sucesso.');
+      },
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível criar a entidade.'),
+    });
+  }
+
+  private updateEntity(id: string, input: Partial<Omit<BusinessEntity, 'id'>>) {
+    this.api.updateEntity(id, input).subscribe({
+      next: () => {
+        this.refreshAll();
+        this.openSuccessSnackBar('Entidade alterada com sucesso.');
+      },
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível alterar a entidade.'),
+    });
+  }
+
+  deleteEntity(entity: BusinessEntity) {
+    this.api.deleteEntity(entity.id).subscribe({
+      next: () => {
+        this.refreshAll();
+        this.openSuccessSnackBar('Entidade excluída com sucesso.');
+      },
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível excluir a entidade.'),
+    });
+  }
+
   setModule(module: ErpModule) {
     this.activeModule = module;
+
+    if (module !== 'Produtos') {
+      this.productSearchTerm = '';
+    }
+
+    if (module !== 'Pedidos') {
+      this.orderSearchTerm = '';
+    }
+  }
+
+  openAnalyticFilter(filter: { target: 'Produtos' | 'Pedidos'; term: string }) {
+    if (filter.target === 'Produtos') {
+      this.productSearchTerm = filter.term;
+      this.orderSearchTerm = '';
+      this.activeModule = 'Produtos';
+      return;
+    }
+
+    this.orderSearchTerm = filter.term;
+    this.productSearchTerm = '';
+    this.activeModule = 'Pedidos';
   }
 
   productStatusLabel(status: unknown) {
@@ -267,8 +354,10 @@ export class AppComponent implements OnInit {
   channelLabel(channel: unknown) {
     const labels: Record<string, string> = {
       STORE: 'Loja física',
+      'Loja física': 'Loja física',
       B2B: 'B2B',
       ECOMMERCE: 'E-commerce',
+      'E-commerce': 'E-commerce',
     };
     return labels[String(channel)] ?? String(channel ?? '');
   }
@@ -280,6 +369,41 @@ export class AppComponent implements OnInit {
       ADJUSTMENT: 'Ajuste',
     };
     return labels[String(type)] ?? String(type ?? '');
+  }
+
+  entityKindLabel(kind: unknown) {
+    const labels: Record<string, string> = {
+      CUSTOMER: 'Cliente',
+      EMPLOYEE: 'Funcionário',
+    };
+    return labels[String(kind)] ?? String(kind ?? '');
+  }
+
+  entityStatusLabel(status: unknown) {
+    const labels: Record<string, string> = {
+      ACTIVE: 'Ativa',
+      INACTIVE: 'Inativa',
+    };
+    return labels[String(status)] ?? String(status ?? '');
+  }
+
+  segmentLabel(segment: unknown) {
+    const labels: Record<string, string> = {
+      RETAIL: 'Varejo',
+      B2B: 'B2B',
+      ECOMMERCE: 'E-commerce',
+    };
+    return labels[String(segment)] ?? String(segment ?? '');
+  }
+
+  entityRoleLabel(role: unknown) {
+    const labels: Record<string, string> = {
+      SALES: 'Vendas',
+      BUYER: 'Compras',
+      WAREHOUSE: 'Estoque',
+      MANAGER: 'Gerência',
+    };
+    return labels[String(role)] ?? String(role ?? '');
   }
 
   verifyAlert(alert: OperationalAlert) {

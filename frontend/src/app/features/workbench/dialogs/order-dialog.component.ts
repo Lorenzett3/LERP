@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Order } from '../../../core/models/erp.models';
 import { EntityDialogData } from './entity-dialog.model';
 
-type OrderInput = Pick<Order, 'customer' | 'channel' | 'total'>;
+type OrderInput = Pick<Order, 'customer' | 'channel' | 'status' | 'total'>;
 
 @Component({
   selector: 'app-order-dialog',
@@ -27,6 +27,7 @@ export class OrderDialogComponent {
   readonly form = this.fb.nonNullable.group({
     customer: [this.data?.item?.customer ?? '', Validators.required],
     channel: [this.data?.item?.channel ?? 'STORE', Validators.required],
+    status: [this.data?.item?.status ?? 'DRAFT', Validators.required],
     total: [this.data?.item?.total ?? 0, [Validators.required, Validators.min(1)]],
   });
 

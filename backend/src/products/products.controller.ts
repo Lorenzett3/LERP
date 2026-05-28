@@ -16,12 +16,12 @@ export class ProductsController {
   }
 
   @Post()
-  create(@Body() body: { sku: string; name: string; category: string; price: number; stock: number }) {
+  create(@Body() body: { sku: string; name: string; category: string; price: number; stock: number; status?: 'ACTIVE' | 'BLOCKED' }) {
     return this.productsService.create(body);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: { sku?: string; name?: string; category?: string; price?: number; stock?: number }) {
+  update(@Param('id') id: string, @Body() body: { sku?: string; name?: string; category?: string; price?: number; stock?: number; status?: 'ACTIVE' | 'BLOCKED' }) {
     return this.productsService.update(id, body);
   }
 

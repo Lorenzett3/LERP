@@ -36,3 +36,16 @@ export interface InventoryMovement {
   reference: string;
   postedAt: string;
 }
+
+export interface BusinessEntity {
+  id: string;
+  kind: 'CUSTOMER' | 'EMPLOYEE';
+  name: string;
+  document: string;
+  customerType?: 'PF' | 'PJ';
+  segment?: 'RETAIL' | 'B2B' | 'ECOMMERCE';
+  role?: 'SALES' | 'BUYER' | 'WAREHOUSE' | 'MANAGER';
+  email?: string;
+  creditLimit?: number;
+  status: 'ACTIVE' | 'INACTIVE';
+}

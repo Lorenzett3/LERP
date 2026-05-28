@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="kind">
+        <mat-option value="CUSTOMER">Cliente</mat-option>
+        <mat-option value="EMPLOYEE">Funcionário</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Documento</mat-label>
+      <input matInput formControlName="document" />
+    </mat-form-field>
+
+    @if (isCustomer) {
+      <div class="inline-fields">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Tipo de cliente</mat-label>
+          <mat-select formControlName="customerType">
+            <mat-option value="PF">Pessoa física</mat-option>
+            <mat-option value="PJ">Pessoa jurídica</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Segmento</mat-label>
+          <mat-select formControlName="segment">
+            <mat-option value="RETAIL">Varejo</mat-option>
+            <mat-option value="B2B">B2B</mat-option>
+            <mat-option value="ECOMMERCE">E-commerce</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Limite de crédito</mat-label>
+        <input matInput type="number" formControlName="creditLimit" />
+      </mat-form-field>
+    } @else {
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Função</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="SALES">Vendas</mat-option>
+          <mat-option value="BUYER">Compras</mat-option>
+          <mat-option value="WAREHOUSE">Estoque</mat-option>
+          <mat-option value="MANAGER">Gerência</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+    }
+
+    <mat-checkbox formControlName="active">Entidade ativa</mat-checkbox>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="dialog-cancel-button" mat-button mat-dialog-close type="button">{{ isViewMode ? 'Voltar' : 'Cancelar' }}</button>
+  <button class="dialog-save-button" mat-flat-button type="button" [disabled]="isViewMode" (click)="save()">Salvar</button>
+</mat-dialog-actions>

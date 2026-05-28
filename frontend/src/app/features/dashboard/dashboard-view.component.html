@@ -27,7 +27,14 @@
       </mat-card-header>
       <mat-card-content class="bar-list channel-list">
         @for (item of analytics.channelMix; track item.label) {
-          <article>
+          <article
+            class="clickable-card"
+            tabindex="0"
+            role="button"
+            [attr.aria-label]="'Filtrar pedidos por ' + item.label"
+            (click)="analyticFilter.emit({ target: 'Pedidos', term: item.label })"
+            (keydown.enter)="analyticFilter.emit({ target: 'Pedidos', term: item.label })"
+          >
             <div>
               <strong>{{ item.label }}</strong>
               <span>{{ item.detail }}</span>
@@ -47,7 +54,14 @@
       </mat-card-header>
       <mat-card-content class="bar-list category-list">
         @for (item of analytics.categoryValue; track item.label) {
-          <article>
+          <article
+            class="clickable-card"
+            tabindex="0"
+            role="button"
+            [attr.aria-label]="'Filtrar materiais por ' + item.label"
+            (click)="analyticFilter.emit({ target: 'Produtos', term: item.label })"
+            (keydown.enter)="analyticFilter.emit({ target: 'Produtos', term: item.label })"
+          >
             <div>
               <strong>{{ item.label }}</strong>
               <span>{{ item.detail }}</span>

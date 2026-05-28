@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InventoryMovement, Order, Product, User } from './erp.types';
+import { BusinessEntity, InventoryMovement, Order, Product, User } from './erp.types';
 
 @Injectable()
 export class ErpDataService {
@@ -7,6 +7,18 @@ export class ErpDataService {
     { id: 'USR-100', name: 'Analista ERP', email: 'admin@LERP.local', role: 'ADMIN' },
     { id: 'USR-220', name: 'Compras Zafari', email: 'buyer@LERP.local', role: 'BUYER' },
     { id: 'USR-330', name: 'Estoque CD', email: 'warehouse@LERP.local', role: 'WAREHOUSE' },
+  ];
+
+  readonly entities: BusinessEntity[] = [
+    { id: 'BP-10001', kind: 'CUSTOMER', name: 'Loja Zafari Centro', document: '12.345.678/0001-10', customerType: 'PJ', segment: 'RETAIL', creditLimit: 85000, status: 'ACTIVE' },
+    { id: 'BP-10002', kind: 'CUSTOMER', name: 'Cliente B2B Padaria Sul', document: '23.456.789/0001-22', customerType: 'PJ', segment: 'B2B', creditLimit: 32000, status: 'ACTIVE' },
+    { id: 'BP-10003', kind: 'CUSTOMER', name: 'E-commerce LERP Market', document: '34.567.890/0001-33', customerType: 'PJ', segment: 'ECOMMERCE', creditLimit: 50000, status: 'ACTIVE' },
+    { id: 'BP-10004', kind: 'CUSTOMER', name: 'Joao Pereira', document: '123.456.789-10', customerType: 'PF', segment: 'RETAIL', creditLimit: 2500, status: 'ACTIVE' },
+    { id: 'BP-10005', kind: 'CUSTOMER', name: 'Distribuidora Bela Mesa', document: '45.678.901/0001-44', customerType: 'PJ', segment: 'B2B', creditLimit: 120000, status: 'INACTIVE' },
+    { id: 'BP-20001', kind: 'EMPLOYEE', name: 'Mariana Souza', document: '321.654.987-00', role: 'SALES', email: 'mariana.souza@LERP.local', status: 'ACTIVE' },
+    { id: 'BP-20002', kind: 'EMPLOYEE', name: 'Rafael Martins', document: '456.789.123-00', role: 'WAREHOUSE', email: 'rafael.martins@LERP.local', status: 'ACTIVE' },
+    { id: 'BP-20003', kind: 'EMPLOYEE', name: 'Camila Rocha', document: '789.123.456-00', role: 'BUYER', email: 'camila.rocha@LERP.local', status: 'ACTIVE' },
+    { id: 'BP-20004', kind: 'EMPLOYEE', name: 'Eduardo Lima', document: '654.987.321-00', role: 'MANAGER', email: 'eduardo.lima@LERP.local', status: 'ACTIVE' },
   ];
 
   readonly products: Product[] = [

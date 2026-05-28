@@ -11,7 +11,7 @@ export class OrdersController {
   }
 
   @Post()
-  create(@Body() body: { customer: string; channel: 'STORE' | 'B2B' | 'ECOMMERCE'; total: number }) {
+  create(@Body() body: { customer: string; channel: 'STORE' | 'B2B' | 'ECOMMERCE'; status?: 'DRAFT' | 'APPROVAL' | 'PICKING' | 'INVOICED'; total: number }) {
     return this.ordersService.create(body);
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Dashboard, InventoryMovement, Order, Product } from '../models/erp.models';
+import { BusinessEntity, Dashboard, InventoryMovement, Order, Product } from '../models/erp.models';
 
 @Injectable({ providedIn: 'root' })
 export class ErpApiService {
@@ -15,11 +15,11 @@ export class ErpApiService {
     return this.http.get<Product[]>(`${this.apiUrl}/products`);
   }
 
-  createProduct(input: Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock'>) {
+  createProduct(input: Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock' | 'status'>) {
     return this.http.post<Product>(`${this.apiUrl}/products`, input);
   }
 
-  updateProduct(id: string, input: Partial<Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock'>>) {
+  updateProduct(id: string, input: Partial<Pick<Product, 'sku' | 'name' | 'category' | 'price' | 'stock' | 'status'>>) {
     return this.http.patch<Product>(`${this.apiUrl}/products/${id}`, input);
   }
 
@@ -31,7 +31,7 @@ export class ErpApiService {
     return this.http.get<Order[]>(`${this.apiUrl}/orders`);
   }
 
-  createOrder(input: Pick<Order, 'customer' | 'channel' | 'total'>) {
+  createOrder(input: Pick<Order, 'customer' | 'channel' | 'status' | 'total'>) {
     return this.http.post<Order>(`${this.apiUrl}/orders`, input);
   }
 
@@ -57,5 +57,21 @@ export class ErpApiService {
 
   deleteMovement(id: string) {
     return this.http.delete<InventoryMovement>(`${this.apiUrl}/inventory/movements/${id}`);
+  }
+
+  getEntities() {
+    return this.http.get<BusinessEntity[]>(`${this.apiUrl}/entities`);
+  }
+
+  createEntity(input: Omit<BusinessEntity, 'id'>) {
+    return this.http.post<BusinessEntity>(`${this.apiUrl}/entities`, input);
+  }
+
+  updateEntity(id: string, input: Partial<Omit<BusinessEntity, 'id'>>) {
+    return this.http.patch<BusinessEntity>(`${this.apiUrl}/entities/${id}`, input);
+  }
+
+  deleteEntity(id: string) {
+    return this.http.delete<BusinessEntity>(`${this.apiUrl}/entities/${id}`);
   }
 }

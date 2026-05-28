@@ -26,9 +26,11 @@ export class InventoryDialogComponent {
 
   readonly form = this.fb.nonNullable.group({
     productSku: [this.data?.item?.productSku ?? '', Validators.required],
+    productName: [{ value: this.data?.item?.productName ?? '', disabled: true }],
     type: [this.data?.item?.type ?? 'INBOUND', Validators.required],
     quantity: [this.data?.item?.quantity ?? 1, [Validators.required, Validators.min(1)]],
     reference: [this.data?.item?.reference ?? '', Validators.required],
+    postedAt: [{ value: this.data?.item?.postedAt ?? '', disabled: true }],
   });
 
   constructor() {
@@ -43,6 +45,7 @@ export class InventoryDialogComponent {
       return;
     }
 
-    this.dialogRef.close(this.form.getRawValue());
+    const { productName, postedAt, ...value } = this.form.getRawValue();
+    this.dialogRef.close(value);
   }
 }

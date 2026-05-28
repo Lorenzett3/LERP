@@ -92,6 +92,14 @@ button {
     background-color 140ms ease;
 }
 
+button:active,
+[role='button']:active,
+.mat-mdc-menu-item:active {
+  box-shadow: var(--shadow-panel) !important;
+  filter: brightness(0.96);
+  transform: translateY(1px) scale(0.99);
+}
+
 .mat-mdc-unelevated-button,
 .mat-mdc-raised-button,
 .mat-mdc-outlined-button {
@@ -103,6 +111,15 @@ button {
 .mat-mdc-outlined-button:hover {
   box-shadow: var(--shadow-button-hover) !important;
   transform: translateY(-1px);
+}
+
+.mat-mdc-unelevated-button:active,
+.mat-mdc-raised-button:active,
+.mat-mdc-outlined-button:active,
+.mat-mdc-button:active {
+  box-shadow: var(--shadow-panel) !important;
+  filter: brightness(0.96);
+  transform: translateY(1px) scale(0.99);
 }
 
 .mat-mdc-card {

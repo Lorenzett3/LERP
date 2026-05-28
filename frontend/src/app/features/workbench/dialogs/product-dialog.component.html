@@ -6,24 +6,30 @@
       <mat-label>SKU</mat-label>
       <input matInput formControlName="sku" />
     </mat-form-field>
+
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Descrição</mat-label>
       <input matInput formControlName="name" />
     </mat-form-field>
+
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Categoria</mat-label>
       <input matInput formControlName="category" />
     </mat-form-field>
+
     <div class="inline-fields">
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Preço</mat-label>
         <input matInput type="number" formControlName="price" />
       </mat-form-field>
+
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Estoque</mat-label>
         <input matInput type="number" formControlName="stock" />
       </mat-form-field>
     </div>
+
+    <mat-checkbox formControlName="active">Material ativo</mat-checkbox>
   </form>
 </mat-dialog-content>
 

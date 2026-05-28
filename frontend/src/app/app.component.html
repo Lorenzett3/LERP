@@ -6,13 +6,18 @@
   (refresh)="refreshAll()"
 >
   @if (activeModule === 'Painel') {
-    <app-dashboard-view [dashboard]="dashboard" (alertVerify)="verifyAlert($event)" />
+    <app-dashboard-view
+      [dashboard]="dashboard"
+      (alertVerify)="verifyAlert($event)"
+      (analyticFilter)="openAnalyticFilter($event)"
+    />
   }
 
   @if (activeModule === 'Produtos') {
     <app-products-workbench
       [products]="products"
       [columns]="productColumns"
+      [searchTerm]="productSearchTerm"
       (createClicked)="openProductDialog()"
       (viewClicked)="openProductDialog('view', $event)"
       (editClicked)="openProductDialog('edit', $event)"
@@ -24,6 +29,7 @@
     <app-orders-workbench
       [orders]="orders"
       [columns]="orderColumns"
+      [searchTerm]="orderSearchTerm"
       (createClicked)="openOrderDialog()"
       (viewClicked)="openOrderDialog('view', $event)"
       (editClicked)="openOrderDialog('edit', $event)"
@@ -39,6 +45,17 @@
       (viewClicked)="openInventoryDialog('view', $event)"
       (editClicked)="openInventoryDialog('edit', $event)"
       (deleteClicked)="deleteMovement($event)"
+    />
+  }
+
+  @if (activeModule === 'Entidades') {
+    <app-entities-workbench
+      [entities]="entities"
+      [columns]="entityColumns"
+      (createClicked)="openEntityDialog()"
+      (viewClicked)="openEntityDialog('view', $event)"
+      (editClicked)="openEntityDialog('edit', $event)"
+      (deleteClicked)="deleteEntity($event)"
     />
   }
 </app-shell>

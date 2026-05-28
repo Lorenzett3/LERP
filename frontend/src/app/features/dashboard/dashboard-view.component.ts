@@ -17,6 +17,7 @@ import { WorkflowChartComponent } from '../../shared/workflow-chart/workflow-cha
 export class DashboardViewComponent {
   @Input({ required: true }) dashboard!: Dashboard;
   @Output() alertVerify = new EventEmitter<OperationalAlert>();
+  @Output() analyticFilter = new EventEmitter<{ target: 'Produtos' | 'Pedidos'; term: string }>();
 
   formatValue(value: number, format: string = 'number') {
     if (format === 'currency') {
