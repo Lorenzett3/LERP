@@ -28,6 +28,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close type="button">{{ isViewMode ? 'Voltar' : 'Cancelar' }}</button>
-  <button mat-flat-button color="primary" type="button" [disabled]="isViewMode" (click)="save()">Salvar</button>
+  <button class="dialog-cancel-button" mat-button mat-dialog-close type="button">{{ isViewMode ? 'Voltar' : 'Cancelar' }}</button>
+  <button class="dialog-save-button" mat-flat-button type="button" [disabled]="isViewMode" (click)="save()">Salvar</button>
 </mat-dialog-actions>

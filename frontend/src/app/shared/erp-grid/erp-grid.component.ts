@@ -45,7 +45,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         [defaultColDef]="defaultColumnDef"
         [domLayout]="'normal'"
         [pagination]="true"
-        [paginationPageSize]="10"
+        [paginationAutoPageSize]="true"
         [suppressCellFocus]="true"
         [getRowClass]="getRowClass"
       />

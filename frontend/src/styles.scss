@@ -26,9 +26,14 @@
   --color-text-muted: #{$color-text-muted};
   --color-text-inverse: #{$color-text-inverse};
   --color-border: #{$color-border};
+  --color-button-outline: #{$color-button-outline};
   --color-danger: #{$color-danger};
+  --color-danger-button-soft: #{$color-danger-button-soft};
+  --color-danger-button-text: #{$color-danger-button-text};
   --color-warning: #{$color-warning};
   --color-success: #{$color-success};
+  --color-success-button-soft: #{$color-success-button-soft};
+  --color-success-button-text: #{$color-success-button-text};
   --color-scrollbar: #{$color-scrollbar};
 
   --color-button: #{$color-primary};
@@ -79,6 +84,7 @@ input {
 }
 
 button {
+  border: 1px solid var(--color-button-outline);
   transition:
     box-shadow 140ms ease,
     transform 140ms ease,

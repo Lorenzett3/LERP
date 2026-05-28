@@ -20,6 +20,16 @@ mat-dialog-content {
   gap: var(--space-3);
 }
 
+.dialog-cancel-button {
+  background: var(--color-danger-button-soft) !important;
+  color: var(--color-danger-button-text) !important;
+}
+
+.dialog-save-button {
+  background: var(--color-success-button-soft) !important;
+  color: var(--color-success-button-text) !important;
+}
+
 @media (max-width: 560px) {
   .inline-fields {
     grid-template-columns: 1fr;

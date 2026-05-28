@@ -59,7 +59,7 @@
 
   input {
     min-width: 0;
-    border: 0;
+    border: 1px solid var(--color-button-outline);
     outline: 0;
     background: transparent;
     color: var(--color-text);
@@ -71,7 +71,7 @@
     justify-content: center;
     gap: 4px;
     min-height: 30px;
-    border: 0;
+    border: 1px solid var(--color-button-outline);
     border-radius: var(--radius-sm);
     background: var(--color-surface-muted);
     color: var(--color-text-muted);
@@ -271,7 +271,7 @@ ag-grid-angular {
     height: 36px;
     align-items: center;
     justify-content: center;
-    border: 0;
+    border: 1px solid var(--color-button-outline);
     border-radius: var(--radius-sm);
     color: var(--color-text-inverse);
     cursor: pointer;
