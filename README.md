@@ -1,3 +1,5 @@
+<img width="1896" height="903" alt="image" src="https://github.com/user-attachments/assets/18c4cf7b-afa7-421d-993c-53aab323ab0b" />
+
 # LERP
 
 ERP de portfólio inspirado em arquitetura SAP para operações de varejo. O projeto usa Angular no frontend, NestJS no backend e uma base preparada para evoluir para PostgreSQL com TypeORM.
