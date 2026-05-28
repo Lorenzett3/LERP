@@ -56,14 +56,14 @@ export class AppComponent implements OnInit {
     { field: 'category', headerName: 'Categoria', width: 140 },
     { field: 'price', headerName: 'Preço', width: 110 },
     { field: 'stock', headerName: 'Estoque', width: 110 },
-    { field: 'status', headerName: 'Status', width: 120 },
+    { field: 'status', headerName: 'Status', width: 120, valueFormatter: ({ value }) => this.productStatusLabel(value) },
   ];
 
   readonly orderColumns: ColDef<Order>[] = [
     { field: 'id', headerName: 'Pedido', width: 130 },
     { field: 'customer', headerName: 'Cliente', flex: 1 },
-    { field: 'channel', headerName: 'Canal', width: 130 },
-    { field: 'status', headerName: 'Fluxo', width: 130 },
+    { field: 'channel', headerName: 'Canal', width: 130, valueFormatter: ({ value }) => this.channelLabel(value) },
+    { field: 'status', headerName: 'Fluxo', width: 130, valueFormatter: ({ value }) => this.orderStatusLabel(value) },
     { field: 'total', headerName: 'Valor', width: 120 },
     { field: 'createdAt', headerName: 'Criado em', width: 130 },
   ];
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
     { field: 'id', headerName: 'Doc. MM', width: 130 },
     { field: 'productSku', headerName: 'SKU', width: 150 },
     { field: 'productName', headerName: 'Material', flex: 1 },
-    { field: 'type', headerName: 'Movimento', width: 130 },
+    { field: 'type', headerName: 'Movimento', width: 130, valueFormatter: ({ value }) => this.movementTypeLabel(value) },
     { field: 'quantity', headerName: 'Qtd.', width: 100 },
     { field: 'reference', headerName: 'Referência', width: 140 },
     { field: 'postedAt', headerName: 'Lançado em', width: 160 },
@@ -158,7 +158,7 @@ export class AppComponent implements OnInit {
         this.refreshAll();
         this.openSuccessSnackBar('Produto criado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel criar o produto.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível criar o produto.'),
     });
   }
 
@@ -168,7 +168,7 @@ export class AppComponent implements OnInit {
         this.refreshAll();
         this.openSuccessSnackBar('Produto alterado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel alterar o produto.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível alterar o produto.'),
     });
   }
 
@@ -176,9 +176,9 @@ export class AppComponent implements OnInit {
     this.api.deleteProduct(product.id).subscribe({
       next: () => {
         this.refreshAll();
-        this.openSuccessSnackBar('Produto deletado com sucesso.');
+        this.openSuccessSnackBar('Produto excluído com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel deletar o produto.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível excluir o produto.'),
     });
   }
 
@@ -188,7 +188,7 @@ export class AppComponent implements OnInit {
         this.refreshAll();
         this.openSuccessSnackBar('Pedido criado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel criar o pedido.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível criar o pedido.'),
     });
   }
 
@@ -198,7 +198,7 @@ export class AppComponent implements OnInit {
         this.refreshAll();
         this.openSuccessSnackBar('Pedido alterado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel alterar o pedido.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível alterar o pedido.'),
     });
   }
 
@@ -206,9 +206,9 @@ export class AppComponent implements OnInit {
     this.api.deleteOrder(order.id).subscribe({
       next: () => {
         this.refreshAll();
-        this.openSuccessSnackBar('Pedido deletado com sucesso.');
+        this.openSuccessSnackBar('Pedido excluído com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel deletar o pedido.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível excluir o pedido.'),
     });
   }
 
@@ -218,7 +218,7 @@ export class AppComponent implements OnInit {
         this.refreshAll();
         this.openSuccessSnackBar('Movimento de estoque lançado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel lancar o movimento de estoque.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível lançar o movimento de estoque.'),
     });
   }
 
@@ -228,7 +228,7 @@ export class AppComponent implements OnInit {
         this.refreshAll();
         this.openSuccessSnackBar('Movimento de estoque alterado com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel alterar o movimento de estoque.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível alterar o movimento de estoque.'),
     });
   }
 
@@ -236,14 +236,50 @@ export class AppComponent implements OnInit {
     this.api.deleteMovement(movement.id).subscribe({
       next: () => {
         this.refreshAll();
-        this.openSuccessSnackBar('Movimento de estoque deletado com sucesso.');
+        this.openSuccessSnackBar('Movimento de estoque excluído com sucesso.');
       },
-      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Nao foi possivel deletar o movimento de estoque.'),
+      error: (error: HttpErrorResponse) => this.openErrorSnackBar(error, 'Não foi possível excluir o movimento de estoque.'),
     });
   }
 
   setModule(module: ErpModule) {
     this.activeModule = module;
+  }
+
+  productStatusLabel(status: unknown) {
+    const labels: Record<string, string> = {
+      ACTIVE: 'Ativo',
+      BLOCKED: 'Bloqueado',
+    };
+    return labels[String(status)] ?? String(status ?? '');
+  }
+
+  orderStatusLabel(status: unknown) {
+    const labels: Record<string, string> = {
+      DRAFT: 'Criado',
+      APPROVAL: 'Aprovação',
+      PICKING: 'Separação',
+      INVOICED: 'Faturado',
+    };
+    return labels[String(status)] ?? String(status ?? '');
+  }
+
+  channelLabel(channel: unknown) {
+    const labels: Record<string, string> = {
+      STORE: 'Loja física',
+      B2B: 'B2B',
+      ECOMMERCE: 'E-commerce',
+    };
+    return labels[String(channel)] ?? String(channel ?? '');
+  }
+
+  movementTypeLabel(type: unknown) {
+    const labels: Record<string, string> = {
+      INBOUND: 'Entrada',
+      OUTBOUND: 'Saída',
+      ADJUSTMENT: 'Ajuste',
+    };
+    return labels[String(type)] ?? String(type ?? '');
   }
 
   verifyAlert(alert: OperationalAlert) {

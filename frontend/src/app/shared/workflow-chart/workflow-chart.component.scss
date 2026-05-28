@@ -1,79 +1,117 @@
 .chart {
   display: grid;
-  gap: var(--space-4);
-}
-
-.bar-row {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-3);
+}
+
+.stage-card {
+  position: relative;
+  display: grid;
+  min-height: 150px;
+  align-content: space-between;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at top right, var(--color-info-soft), transparent 42%),
+    linear-gradient(180deg, var(--color-surface), var(--color-surface-soft)),
+    var(--color-surface);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+  overflow: hidden;
+}
+
+.stage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+}
+
+.stage-card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 28px;
+  right: calc(var(--space-3) * -1);
+  z-index: 1;
+  width: var(--space-3);
+  height: 2px;
+  background: var(--color-primary-soft);
+}
+
+.stage-copy {
+  display: grid;
+  gap: 2px;
 
   span {
     color: var(--color-text-muted);
-  }
-}
-
-@media (min-width: 721px) and (max-width: 1100px) {
-  .chart {
-    gap: var(--space-3);
+    font-size: 0.78rem;
+    text-transform: uppercase;
   }
 
-  .bar-row {
-    gap: var(--space-1);
+  strong {
+    color: var(--color-text);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1;
   }
 
-  .label span,
-  .label strong {
-    font-size: 0.86rem;
-  }
-
-  .track {
-    height: 8px;
-  }
-}
-
-@media (max-width: 720px) {
-  .chart {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
-  }
-
-  .bar-row {
-    gap: 6px;
-  }
-
-  .label {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .label span,
-  .label strong {
+  small {
+    color: var(--color-text-muted);
     font-size: 0.78rem;
   }
-
-  .track {
-    height: 7px;
-  }
 }
 
-.track {
-  height: 10px;
+.stage-meter {
+  height: 8px;
   overflow: hidden;
   border-radius: 999px;
   background: var(--color-surface-muted);
 
   span {
     display: block;
+    width: var(--stage-progress);
     height: 100%;
     border-radius: inherit;
-    background: var(--color-accent);
+    background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
   }
+}
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .chart {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stage-card {
+    min-height: 124px;
+    padding: var(--space-3);
+  }
+
+  .stage-card::after {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .chart {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .stage-card {
+    min-height: auto;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .stage-card::after {
+    display: none;
+  }
+
+  .stage-copy strong {
+    font-size: 1.45rem;
+  }
+
 }

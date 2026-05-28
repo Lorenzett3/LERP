@@ -17,4 +17,21 @@ import { WorkflowChartComponent } from '../../shared/workflow-chart/workflow-cha
 export class DashboardViewComponent {
   @Input({ required: true }) dashboard!: Dashboard;
   @Output() alertVerify = new EventEmitter<OperationalAlert>();
+
+  formatValue(value: number, format: string = 'number') {
+    if (format === 'currency') {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+
+    if (format === 'percent') {
+      return `${value}%`;
+    }
+
+    return new Intl.NumberFormat('pt-BR').format(value);
+  }
+
+  formatQuantity(value: number) {
+    const sign = value > 0 ? '+' : '';
+    return `${sign}${new Intl.NumberFormat('pt-BR').format(value)}`;
+  }
 }

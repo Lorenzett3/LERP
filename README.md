@@ -5,10 +5,20 @@ ERP de portfólio inspirado em arquitetura SAP para operações de varejo. O pro
 ## Módulos
 
 - Autenticação: login demonstrativo, perfis e autorizações no estilo ERP.
-- Painel: KPIs, alertas de reposição e fluxo operacional.
+- Painel: KPIs executivos, fluxo SD em gráfico por etapas, análises por canal/categoria/estoque, indicadores operacionais e alertas roláveis com ação de verificação.
 - Produtos: cadastro mestre de materiais, categorias, preço, estoque e ações de visualizar, editar e deletar.
 - Pedidos: pedidos de venda com criação, edição, exclusão e fluxo de status.
 - Estoque: movimentos MM de entrada, saída e ajuste.
+
+## Interface
+
+- Navegação responsiva para desktop, tablet e celular.
+- Grids operacionais com pesquisa por "contém" ou "igual", paginação automática e ações por linha.
+- Dashboard organizado em linhas operacionais: KPIs, saúde de estoque, vendas por canal, valor por categoria, fluxo SD, indicadores SD/MM e listas finais de alertas/documentos.
+- Interface padronizada em português brasileiro, com rótulos traduzidos para status, canais, movimentos e ações operacionais.
+- Cards no mobile para substituir tabelas largas.
+- Snackbars de sucesso e erro no canto inferior direito.
+- Dialogs de criação, visualização e edição para materiais, pedidos e movimentos.
 
 ## Como Rodar
 

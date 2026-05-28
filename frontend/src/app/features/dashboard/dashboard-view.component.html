@@ -4,35 +4,127 @@
   }
 </section>
 
-<section class="dashboard-grid">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Fluxo SD</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <app-workflow-chart [stages]="dashboard.workflow" />
-    </mat-card-content>
-  </mat-card>
+@if (dashboard.analytics; as analytics) {
+  <section class="dashboard-stack">
+    <mat-card class="insight-card">
+      <mat-card-header>
+        <mat-card-title>Saúde do estoque</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="status-grid">
+        @for (item of analytics.stockHealth; track item.label) {
+          <article [ngClass]="item.tone">
+            <span>{{ item.label }}</span>
+            <strong>{{ formatValue(item.value, item.format) }}</strong>
+            <small>{{ item.detail }}</small>
+          </article>
+        }
+      </mat-card-content>
+    </mat-card>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Alertas operacionais</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="alerts">
-      @for (alert of dashboard.alerts; track alert.title) {
-        <article [ngClass]="alert.severity.toLowerCase()">
-          <div>
-            <span>{{ alert.severity }}</span>
-            <strong>{{ alert.title }}</strong>
-            <small>{{ alert.detail }}</small>
-          </div>
+    <mat-card class="insight-card">
+      <mat-card-header>
+        <mat-card-title>Vendas por canal</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="bar-list channel-list">
+        @for (item of analytics.channelMix; track item.label) {
+          <article>
+            <div>
+              <strong>{{ item.label }}</strong>
+              <span>{{ item.detail }}</span>
+            </div>
+            <small>{{ formatValue(item.value, item.format) }}</small>
+            <div class="bar-track" aria-hidden="true">
+              <span [style.width.%]="item.percent"></span>
+            </div>
+          </article>
+        }
+      </mat-card-content>
+    </mat-card>
 
-          <button mat-stroked-button type="button" (click)="alertVerify.emit(alert)">
-            <mat-icon>open_in_new</mat-icon>
-            Verificar
-          </button>
-        </article>
-      }
-    </mat-card-content>
-  </mat-card>
-</section>
+    <mat-card class="insight-card">
+      <mat-card-header>
+        <mat-card-title>Valor por categoria</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="bar-list category-list">
+        @for (item of analytics.categoryValue; track item.label) {
+          <article>
+            <div>
+              <strong>{{ item.label }}</strong>
+              <span>{{ item.detail }}</span>
+            </div>
+            <small>{{ formatValue(item.value, item.format) }}</small>
+            <div class="bar-track" aria-hidden="true">
+              <span [style.width.%]="item.percent"></span>
+            </div>
+          </article>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="insight-card">
+      <mat-card-header>
+        <mat-card-title>Fluxo SD</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-workflow-chart [stages]="dashboard.workflow" />
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="insight-card operations-card">
+      <mat-card-header>
+        <mat-card-title>Indicadores operacionais</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="metric-strip">
+        @for (item of analytics.operations; track item.label) {
+          <article [ngClass]="item.tone">
+            <span>{{ item.label }}</span>
+            <strong>{{ formatValue(item.value, item.format) }}</strong>
+            <small>{{ item.detail }}</small>
+          </article>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <section class="bottom-grid">
+      <mat-card class="insight-card">
+        <mat-card-header>
+          <mat-card-title>Alertas operacionais</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="alerts">
+          @for (alert of dashboard.alerts; track alert.title) {
+            <article [ngClass]="alert.severity.toLowerCase()">
+              <div>
+                <span>{{ alert.severity }}</span>
+                <strong>{{ alert.title }}</strong>
+                <small>{{ alert.detail }}</small>
+              </div>
+
+              <button mat-stroked-button type="button" (click)="alertVerify.emit(alert)">
+                <mat-icon>open_in_new</mat-icon>
+                Verificar
+              </button>
+            </article>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="insight-card">
+        <mat-card-header>
+          <mat-card-title>Últimos documentos MM</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="activity-list">
+          @for (movement of analytics.recentMovements; track movement.id) {
+            <article [ngClass]="movement.tone">
+              <div>
+                <strong>{{ movement.id }}</strong>
+                <span>{{ movement.label }}</span>
+                <small>{{ movement.detail }}</small>
+              </div>
+              <b>{{ formatQuantity(movement.value) }}</b>
+            </article>
+          }
+        </mat-card-content>
+      </mat-card>
+    </section>
+  </section>
+}

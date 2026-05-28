@@ -37,7 +37,7 @@
 
 .brand-mark {
   display: grid;
-  width: 42px;
+  width: 35px;
   height: 42px;
   place-items: center;
   border-radius: var(--radius-md);
@@ -230,9 +230,10 @@ main {
 
   .nav-area {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
+    grid-template-columns: minmax(0, 1fr) 46px;
     align-items: center;
     gap: var(--space-3);
+    width: 100%;
   }
 
   .user-profile {
@@ -273,8 +274,8 @@ main {
   }
 
   .nav-area {
-    justify-self: end;
-    width: min(820px, 100%);
+    justify-self: stretch;
+    width: 100%;
   }
 
   nav {
@@ -314,10 +315,15 @@ main {
 
 @media (max-width: 720px) {
   .sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    align-items: center;
     padding: var(--space-4);
   }
 
   .brand {
+    grid-column: 1;
+    grid-row: 1;
     align-items: center;
   }
 
@@ -331,10 +337,12 @@ main {
   }
 
   .brand small {
-    font-size: 0.76rem;
+    display: none;
   }
 
   nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
     button {
@@ -350,8 +358,13 @@ main {
   }
 
   .nav-area {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
+    display: contents;
+  }
+
+  .user-profile {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
   }
 
   .topbar,

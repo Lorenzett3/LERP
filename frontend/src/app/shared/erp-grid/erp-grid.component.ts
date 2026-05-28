@@ -74,7 +74,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
               <button class="edit" type="button" aria-label="Editar" (click)="editRow.emit(row)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button class="delete" type="button" aria-label="Deletar" (click)="deleteRow.emit(row)">
+              <button class="delete" type="button" aria-label="Excluir" (click)="deleteRow.emit(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </footer>
@@ -148,7 +148,13 @@ export class ErpGridComponent<T> {
     }
 
     const field = column.field as keyof T | undefined;
-    return field ? row[field] : '';
+    const value = field ? row[field] : '';
+
+    if (column.valueFormatter && typeof column.valueFormatter === 'function') {
+      return column.valueFormatter({ data: row, value } as never);
+    }
+
+    return value;
   }
 
   getMobileTitle(row: T, index: number) {
@@ -181,7 +187,7 @@ export class ErpGridComponent<T> {
       const actions = [
         { icon: 'visibility', title: 'Visualizar', className: 'view', handler: () => this.viewRow.emit(params.data) },
         { icon: 'edit', title: 'Editar', className: 'edit', handler: () => this.editRow.emit(params.data) },
-        { icon: 'delete', title: 'Deletar', className: 'delete', handler: () => this.deleteRow.emit(params.data) },
+        { icon: 'delete', title: 'Excluir', className: 'delete', handler: () => this.deleteRow.emit(params.data) },
       ];
 
       actions.forEach((action) => {

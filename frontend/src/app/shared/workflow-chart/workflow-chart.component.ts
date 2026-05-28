@@ -7,15 +7,17 @@ import { WorkflowStage } from '../../core/models/erp.models';
   template: `
     <section class="chart">
       @for (stage of stages; track stage.stage) {
-        <div class="bar-row">
-          <div class="label">
+        <article class="stage-card" [style.--stage-progress]="barWidth(stage.count) + '%'">
+          <div class="stage-copy">
             <span>{{ stage.stage }}</span>
             <strong>{{ stage.count }}</strong>
+            <small>documentos</small>
           </div>
-          <div class="track">
-            <span [style.width.%]="barWidth(stage.count)"></span>
+
+          <div class="stage-meter" aria-hidden="true">
+            <span></span>
           </div>
-        </div>
+        </article>
       }
     </section>
   `,

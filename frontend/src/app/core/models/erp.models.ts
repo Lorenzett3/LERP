@@ -57,6 +57,32 @@ export interface WorkflowStage {
   count: number;
 }
 
+export interface DashboardBreakdownItem {
+  label: string;
+  value: number;
+  count?: number;
+  percent?: number;
+  detail?: string;
+  tone?: 'success' | 'warning' | 'danger' | 'info';
+  format?: 'currency' | 'number' | 'percent';
+}
+
+export interface DashboardActivityItem {
+  id: string;
+  label: string;
+  detail: string;
+  value: number;
+  tone: 'success' | 'warning' | 'danger' | 'info';
+}
+
+export interface DashboardAnalytics {
+  channelMix: DashboardBreakdownItem[];
+  stockHealth: DashboardBreakdownItem[];
+  categoryValue: DashboardBreakdownItem[];
+  operations: DashboardBreakdownItem[];
+  recentMovements: DashboardActivityItem[];
+}
+
 export interface Dashboard {
   client: string;
   companyCode: string;
@@ -64,6 +90,7 @@ export interface Dashboard {
   kpis: Kpi[];
   alerts: OperationalAlert[];
   workflow: WorkflowStage[];
+  analytics?: DashboardAnalytics;
 }
 
 export type GridColumn<T> = ColDef<T>;

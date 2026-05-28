@@ -21,9 +21,9 @@ export class AppShellComponent {
   @Output() refresh = new EventEmitter<void>();
 
   readonly demoUsers = [
-    { value: 'admin@LERP.local', code: 'ADMIN', role: 'Analista ERP', label: 'ADMIN - Analista ERP' },
-    { value: 'buyer@LERP.local', code: 'BUYER', role: 'Compras', label: 'BUYER - Compras' },
-    { value: 'warehouse@LERP.local', code: 'WAREHOUSE', role: 'Estoque', label: 'WAREHOUSE - Estoque' },
+    { value: 'admin@LERP.local', code: 'ADM', role: 'Analista ERP', label: 'Administrador - Analista ERP' },
+    { value: 'buyer@LERP.local', code: 'COMPRAS', role: 'Compras', label: 'Compras - Reposição' },
+    { value: 'warehouse@LERP.local', code: 'ESTOQUE', role: 'Estoque', label: 'Estoque - Separação' },
   ];
 
   readonly navItems: NavItem[] = [
